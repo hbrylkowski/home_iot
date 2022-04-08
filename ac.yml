@@ -12,13 +12,13 @@ ota:
   password: ""
 
 wifi:
-  ssid: !secret ssid
-  password: !secret wifi_pass
+  ssid: !env_var SSID
+  password: !env_var WIFI_PASS
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "AC Fallback Hotspot"
-    password: !secret fallback_pass
+    password: !env_var FALLBACK_PASS
 
 captive_portal:
 

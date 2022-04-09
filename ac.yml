@@ -35,7 +35,7 @@ globals:
  - id: commit_id
    type: char[40]
    restore_value: no
-   initial_value: !env_var COMMIT
+   initial_value: !env_var GITHUB_SHA
 
 text_sensor:
   - platform: version

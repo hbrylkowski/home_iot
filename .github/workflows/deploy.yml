@@ -26,12 +26,6 @@ jobs:
         with:
           path: ~/.platformio
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-      - name: Declare git versions
-        id: vars
-        shell: bash
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - run: pip install esphome
       - run: esphome run ac.yml --device ac.local --no-logs
         env:

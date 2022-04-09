@@ -29,7 +29,7 @@ jobs:
       - run: pip install esphome
       - name: Add quotes to commit sha
         id: add_quotes
-        run: echo "::set-output name=commit_sha::'"'$GITHUB_SHA'"'"
+        run: echo "::set-output name=commit_sha::\"$GITHUB_SHA\""
       - run: esphome run ac.yml --device ac.local --no-logs
         env:
           SSID: ${{ secrets.SSID }}

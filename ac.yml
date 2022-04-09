@@ -33,9 +33,9 @@ uart:
 
 globals:
  - id: commit_id
-   type: char[40]
+   type: std::string
    restore_value: no
-   initial_value: !env_var GITHUB_SHA
+   initial_value: !env_var COMMIT_SHA
 
 text_sensor:
   - platform: version
@@ -44,7 +44,7 @@ text_sensor:
   - platform: template
     name: "commit"
     lambda: |-
-      return commit_id;
+      return id(commit_id);
     update_interval: 60s
 
 

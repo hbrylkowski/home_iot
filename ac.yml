@@ -36,10 +36,6 @@ globals:
    type: std::string
    restore_value: no
    initial_value: !env_var COMMIT_SHA
- - id: beep
-   type: bool
-   restore_value: yes
-   initial_value: true
 
 text_sensor:
   - platform: version

@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           clean: false
-      - run: esphome config ac.yml | diff -y old.yml -
+      - run: esphome config ac.yml | colordiff -y old.yml -
         env:
           SSID: ${{ secrets.SSID }}
           WIFI_PASS: ${{ secrets.WIFI_PASS }}

@@ -31,6 +31,8 @@ uart:
   rx_pin: 3         # hardware dependant
   baud_rate: 9600
 
+web_server:
+
 # Main settings
 climate:
   - platform: midea

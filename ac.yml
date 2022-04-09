@@ -31,6 +31,23 @@ uart:
   rx_pin: 3         # hardware dependant
   baud_rate: 9600
 
+globals:
+ - id: commit_id
+   type: char[40]
+   restore_value: no
+   initial_value: !env_var COMMIT
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+    hide_timestamp: true
+  - platform: template
+    name: "commit"
+    lambda: |-
+      return {commit_id};
+    update_interval: 60s
+
+
 web_server:
 
 # Main settings

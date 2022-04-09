@@ -44,7 +44,7 @@ text_sensor:
   - platform: template
     name: "commit"
     lambda: |-
-      return {commit_id};
+      return commit_id;
     update_interval: 60s
 
 

@@ -34,6 +34,10 @@ jobs:
         with:
           ref: ${{ steps.last_update.outputs.commit_sha }}
       - run: esphome config ac.yml
+          SSID: ${{ secrets.SSID }}
+          WIFI_PASS: ${{ secrets.WIFI_PASS }}
+          FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
+          COMMIT_SHA: ${{ steps.last_update.outputs.commit_sha }}
 
   deployment:
     runs-on: self-hosted
@@ -60,7 +64,7 @@ jobs:
         run: echo "::set-output name=commit_sha::\"$GITHUB_SHA\""
 #      - run: esphome run ac.yml --device ac.local --no-logs
 #        env:
-#          SSID: ${{ secrets.SSID }}
-#          WIFI_PASS: ${{ secrets.WIFI_PASS }}
-#          FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
-#          COMMIT_SHA: ${{ steps.add_quotes.outputs.commit_sha }}
+          SSID: ${{ secrets.SSID }}
+          WIFI_PASS: ${{ secrets.WIFI_PASS }}
+          FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
+          COMMIT_SHA: ${{ steps.add_quotes.outputs.commit_sha }}

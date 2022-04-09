@@ -27,10 +27,12 @@ jobs:
           path: ~/.esphome
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       - run: pip install esphome
-      - run: echo "::set-env name=COMMIT_SHA::\"$GITHUB_SHA\""
+      - name: Add quotes to commit sha
+        id: add_quotes
+        run: echo "::set-output name=commit_sha::'"'$GITHUB_SHA'"'"
       - run: esphome run ac.yml --device ac.local --no-logs
         env:
           SSID: ${{ secrets.SSID }}
           WIFI_PASS: ${{ secrets.WIFI_PASS }}
           FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
-          COMMIT_SHA: ${{ env.COMMIT_SHA }}
+          COMMIT_SHA: ${{ steps.add_quotes.outputs.commit_sha }}

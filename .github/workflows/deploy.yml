@@ -34,12 +34,19 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ steps.last_update.outputs.commit_sha }}
-      - run: esphome config ac.yml
+      - run: esphome config ac.yml > ac_old.yml
         env:
           SSID: ${{ secrets.SSID }}
           WIFI_PASS: ${{ secrets.WIFI_PASS }}
           FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
           COMMIT_SHA: ${{ steps.last_update.outputs.commit_sha }}
+      - uses: actions/checkout@v3
+      - run: esphome config ac.yml | diff -y ac_old.yml -
+        env:
+          SSID: ${{ secrets.SSID }}
+          WIFI_PASS: ${{ secrets.WIFI_PASS }}
+          FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
+          COMMIT_SHA: $GITHUB_SHA
 
   deployment:
     runs-on: self-hosted

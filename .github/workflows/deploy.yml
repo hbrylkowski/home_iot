@@ -8,6 +8,26 @@ on:
       - master
 
 jobs:
+  get_state:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Cache ESPHome
+        uses: actions/cache@v2
+        with:
+          path: ~/.esphome
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      - run: pip install esphome
+      - run: curl http://ac.local/text_sensor/commit | jq .value
+
   deployment:
     runs-on: self-hosted
     environment: prod

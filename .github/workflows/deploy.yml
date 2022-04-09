@@ -26,7 +26,14 @@ jobs:
           path: ~/.esphome
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       - run: pip install esphome
-      - run: curl http://ac.local/text_sensor/commit | jq .value
+      - name: Get last commit data
+        id: last_update
+        run: echo "::set-output name=commit_sha::$(curl http://ac.local/text_sensor/commit | jq -r .value)"
+      - name: Get current deployed config
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.last_update.outputs.commit_sha }}
+      - run: esphome config ac.yml
 
   deployment:
     runs-on: self-hosted
@@ -51,9 +58,9 @@ jobs:
       - name: Add quotes to commit sha
         id: add_quotes
         run: echo "::set-output name=commit_sha::\"$GITHUB_SHA\""
-      - run: esphome run ac.yml --device ac.local --no-logs
-        env:
-          SSID: ${{ secrets.SSID }}
-          WIFI_PASS: ${{ secrets.WIFI_PASS }}
-          FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
-          COMMIT_SHA: ${{ steps.add_quotes.outputs.commit_sha }}
+#      - run: esphome run ac.yml --device ac.local --no-logs
+#        env:
+#          SSID: ${{ secrets.SSID }}
+#          WIFI_PASS: ${{ secrets.WIFI_PASS }}
+#          FALLBACK_PASS: ${{ secrets.FALLBACK_PASS }}
+#          COMMIT_SHA: ${{ steps.add_quotes.outputs.commit_sha }}
